@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakshmi Furnitures — Handcrafted Furniture</title>
+
+<!-- ===================================================================
+     TITLE BAR / FAVICON LOGO
+     This is an inline SVG monogram (L F in a brass ring) used as the
+     browser-tab icon. Swap it for your real logo file later by changing
+     this href to e.g. "logo.png" or "logo.svg".
+=================================================================== -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%232B1D14'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23B8925A' stroke-width='2'/%3E%3Ctext x='32' y='42' font-family='Georgia, serif' font-size='28' fill='%23EFE6D6' text-anchor='middle'%3ELF%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --espresso:#2B1D14;
+    --espresso-deep:#1C130D;
+    --ivory:#F4EEE0;
+    --ivory-soft:#EFE6D6;
+    --brass:#B8925A;
+    --brass-light:#D9B98A;
+    --maroon:#6B2737;
+    --ink:#241812;
+    --line: rgba(184,146,90,0.35);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    font-family:'Jost', sans-serif;
+    background:var(--ivory);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+
+  a{ text-decoration:none; color:inherit; }
+  img{ display:block; max-width:100%; }
+
+  /* ---------- ornamental brass divider (signature element) ---------- */
+  .motif{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin:0 auto;
+    width:fit-content;
+  }
+  .motif::before,
+  .motif::after{
+    content:"";
+    width:52px;
+    height:1px;
+    background:linear-gradient(to var(--dir,right), transparent, var(--brass));
+  }
+  .motif::after{ --dir:left; }
+  .motif svg{ width:20px; height:20px; fill:var(--brass); }
+
+  /* ================= TOP BAR ================= */
+  .topbar{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 6vw;
+    background:transparent;
+    transition:background .35s ease, padding .35s ease, box-shadow .35s ease;
+  }
+  .topbar.scrolled{
+    background:rgba(28,19,13,0.92);
+    padding:12px 6vw;
+    box-shadow:0 2px 18px rgba(0,0,0,0.25);
+    backdrop-filter:blur(6px);
+  }
+  .brandmark{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .brandmark .ring{
+    width:38px; height:38px;
+    border-radius:50%;
+    border:1.5px solid var(--brass);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond', serif;
+    color:var(--brass-light);
+    font-size:16px;
+    letter-spacing:1px;
+  }
+  .brandmark .name{
+    color:var(--ivory);
+    font-family:'Cormorant Garamond', serif;
+    font-size:20px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+  .topbar nav a{
+    color:var(--ivory-soft);
+    font-size:13px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    margin-left:34px;
+    opacity:0.85;
+    transition:opacity .25s ease, color .25s ease;
+  }
+  .topbar nav a:hover{ opacity:1; color:var(--brass-light); }
+
+  /* ================= HERO SLIDER ================= */
+  .hero-slider{
+    position:relative;
+    width:100%;
+    height:92vh;
+    min-height:520px;
+    overflow:hidden;
+    background:var(--espresso-deep);
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transition:opacity 1.1s ease;
+  }
+  .slide.active{ opacity:1; }
+  .slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    /* subtle slow zoom for a premium feel */
+    animation:kenburns 12s ease-in-out infinite alternate;
+  }
+  @keyframes kenburns{
+    from{ transform:scale(1); }
+    to{ transform:scale(1.08); }
+  }
+  .slide .scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(28,19,13,0.55) 0%, rgba(28,19,13,0.35) 45%, rgba(28,19,13,0.8) 100%);
+  }
+
+  .hero-content{
+    position:relative;
+    z-index:5;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 20px;
+  }
+  .hero-content .eyebrow{
+    color:var(--brass-light);
+    font-size:13px;
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .hero-content h1{
+    color:var(--ivory);
+    font-size:clamp(48px, 9vw, 108px);
+    line-height:0.95;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+  }
+  .hero-content .tagline{
+    margin-top:22px;
+    color:var(--ivory-soft);
+    font-size:clamp(15px, 1.6vw, 19px);
+    font-weight:300;
+    letter-spacing:0.03em;
+    max-width:560px;
+  }
+  .hero-content .cta{
+    margin-top:40px;
+    display:inline-block;
+    padding:14px 40px;
+    border:1px solid var(--brass);
+    color:var(--brass-light);
+    font-size:12px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    transition:background .3s ease, color .3s ease;
+  }
+  .hero-content .cta:hover{
+    background:var(--brass);
+    color:var(--espresso-deep);
+  }
+
+  .slider-dots{
+    position:absolute;
+    bottom:36px; left:50%;
+    transform:translateX(-50%);
+    z-index:6;
+    display:flex;
+    gap:10px;
+  }
+  .slider-dots button{
+    width:8px; height:8px;
+    border-radius:50%;
+    border:1px solid var(--brass-light);
+    background:transparent;
+    cursor:pointer;
+    padding:0;
+  }
+  .slider-dots button.active{ background:var(--brass-light); }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:34px; right:6vw;
+    z-index:6;
+    color:var(--ivory-soft);
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    writing-mode:vertical-rl;
+    display:flex; align-items:center; gap:10px;
+    opacity:0.7;
+  }
+  .scroll-cue::after{
+    content:"";
+    width:1px; height:34px;
+    background:var(--brass-light);
+  }
+
+  /* ================= INTRO ================= */
+  .intro{
+    max-width:760px;
+    margin:0 auto;
+    padding:120px 24px 90px;
+    text-align:center;
+  }
+  .intro .motif{ margin-bottom:26px; }
+  .intro h2{
+    font-size:clamp(30px, 4vw, 44px);
+    color:var(--espresso);
+    margin-bottom:24px;
+  }
+  .intro p{
+    font-size:16.5px;
+    line-height:1.85;
+    color:#4a3b30;
+    font-weight:300;
+  }
+
+  /* ================= GALLERY ================= */
+  .gallery-section{
+    padding:0 6vw 130px;
+  }
+  .gallery-heading{
+    text-align:center;
+    margin-bottom:60px;
+  }
+  .gallery-heading span{
+    display:block;
+    font-size:12px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin-bottom:14px;
+  }
+  .gallery-heading h2{
+    font-size:clamp(28px, 4vw, 40px);
+    color:var(--espresso);
+  }
+
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:26px;
+  }
+  .gallery-item{
+    position:relative;
+    aspect-ratio:3/4;
+    overflow:hidden;
+    background:var(--espresso);
+    border:1px solid var(--line);
+  }
+  .gallery-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .6s ease, filter .6s ease;
+  }
+  .gallery-item:hover img{
+    transform:scale(1.07);
+  }
+  .gallery-caption{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    padding:20px 18px;
+    background:linear-gradient(0deg, rgba(28,19,13,0.88), rgba(28,19,13,0));
+    color:var(--ivory);
+    transform:translateY(8px);
+    opacity:0.92;
+    transition:transform .4s ease;
+  }
+  .gallery-caption .cat{
+    font-size:10.5px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--brass-light);
+    display:block;
+    margin-bottom:4px;
+  }
+  .gallery-caption .title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:20px;
+  }
+  .gallery-item:hover .gallery-caption{ transform:translateY(0); }
+
+  /* placeholder tile styling (used until real photos are added) */
+  .ph{
+    width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    gap:14px;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(184,146,90,0.18), transparent 60%),
+      linear-gradient(160deg, #2B1D14, #1C130D 70%);
+  }
+  .ph svg{ width:46px; height:46px; stroke:var(--brass-light); fill:none; stroke-width:1.2; opacity:0.85; }
+  .ph small{
+    color:var(--ivory-soft);
+    font-size:10.5px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    opacity:0.6;
+  }
+
+  /* ================= FOOTER ================= */
+  footer{
+    background:var(--espresso-deep);
+    color:var(--ivory-soft);
+    padding:70px 6vw 34px;
+  }
+  .footer-inner{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:40px;
+    padding-bottom:40px;
+    border-bottom:1px solid var(--line);
+  }
+  .footer-brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .footer-brand .ring{
+    width:52px; height:52px;
+    border-radius:50%;
+    border:1.5px solid var(--brass);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond', serif;
+    color:var(--brass-light);
+    font-size:21px;
+  }
+  .footer-brand .name{
+    font-family:'Cormorant Garamond', serif;
+    font-size:24px;
+    color:var(--ivory);
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .footer-brand .name small{
+    display:block;
+    font-family:'Jost', sans-serif;
+    font-size:11px;
+    letter-spacing:0.2em;
+    color:var(--brass-light);
+    text-transform:uppercase;
+    margin-top:4px;
+  }
+
+  .footer-meta{
+    display:flex;
+    gap:56px;
+    flex-wrap:wrap;
+  }
+  .footer-meta div{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .footer-meta svg{
+    width:18px; height:18px;
+    stroke:var(--brass-light);
+    fill:none;
+    stroke-width:1.6;
+    margin-top:2px;
+    flex-shrink:0;
+  }
+  .footer-meta .label{
+    font-size:10.5px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin-bottom:4px;
+  }
+  .footer-meta .value{
+    font-size:15px;
+    font-weight:300;
+    color:var(--ivory-soft);
+  }
+
+  .footer-bottom{
+    padding-top:26px;
+    text-align:center;
+    font-size:12px;
+    letter-spacing:0.05em;
+    color:rgba(244,238,224,0.45);
+  }
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width:900px){
+    .gallery-grid{ grid-template-columns:repeat(2, 1fr); }
+    .topbar nav{ display:none; }
+    .footer-inner{ flex-direction:column; align-items:flex-start; }
+  }
+  @media (max-width:520px){
+    .hero-content h1{ font-size:15vw; }
+    .gallery-grid{ gap:16px; }
+  }
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .slide img{ animation:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  :focus-visible{
+    outline:2px solid var(--brass-light);
+    outline-offset:3px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar" id="topbar">
+  <a href="#top" class="brandmark">
+    <span class="ring">LF</span>
+    <span class="name">Lakshmi Furnitures</span>
+  </a>
+  <nav>
+    <a href="#intro">About</a>
+    <a href="#gallery">Collection</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- ================= HERO SLIDER ================= -->
+<!--
+  ONLY ONE IMAGE FOR NOW.
+  To add more slides later: duplicate a <div class="slide"> block inside
+  #heroSlider and change the image src — the JS below already supports
+  any number of slides and will auto-rotate + show dots for each.
+-->
+<section class="hero-slider" id="top">
+  <div class="hero-slider-track" id="heroSlider">
+    <div class="slide active">
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1920&q=80" alt="Handcrafted wooden furniture showcase">
+      <div class="scrim"></div>
+    </div>
+    <!-- Add more <div class="slide">...</div> blocks here when you have more images -->
+  </div>
+
+  <div class="slider-dots" id="sliderDots"></div>
+</section>
+
+<!-- ================= INTRO ================= -->
+<section class="intro" id="intro">
+  <div class="motif">
+    <svg viewBox="0 0 24 24"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5L5.5 21.5 8 14 2 9.5h7.5z"/></svg>
+  </div>
+  <h2>Furniture Built to Last a Lifetime</h2>
+  <p>
+    At Lakshmi Furnitures, every piece is shaped by hand and finished with care.
+    We work with solid, sustainably sourced wood to craft furniture that brings
+    warmth, comfort and quiet elegance to your home — designed not just to
+    furnish a space, but to become a part of its story for years to come.
+  </p>
+</section>
+
+<!-- ================= PRODUCT GALLERY ================= -->
+<!--
+  PLACEHOLDER GALLERY — 4 slots.
+  Replace each <img src="..."> below with your real product photos when
+  ready. The captions (category / title) can also be edited freely.
+-->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-heading">
+    <span>Our Collection</span>
+    <h2>Featured Pieces</h2>
+  </div>
+
+  <div class="gallery-grid">
+
+    <div class="gallery-item">
+      <div class="ph">
+        <svg viewBox="0 0 48 48"><rect x="6" y="20" width="36" height="4"/><path d="M8 24v10M40 24v10M6 20l3-8h30l3 8"/></svg>
+        <small>Add Image</small>
+      </div>
+      <div class="gallery-caption">
+        <span class="cat">Dining</span>
+        <span class="title">Dining Table</span>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="ph">
+        <svg viewBox="0 0 48 48"><path d="M8 26v10M40 26v10M6 26h36v-6a4 4 0 00-4-4H10a4 4 0 00-4 4v6z"/><path d="M8 26v-4a4 4 0 014-4h4M40 26v-4"/></svg>
+        <small>Add Image</small>
+      </div>
+      <div class="gallery-caption">
+        <span class="cat">Living Room</span>
+        <span class="title">Lounge Sofa</span>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="ph">
+        <svg viewBox="0 0 48 48"><rect x="6" y="14" width="36" height="14" rx="2"/><path d="M8 28v6M40 28v6M14 14v-3a2 2 0 012-2h16a2 2 0 012 2v3"/></svg>
+        <small>Add Image</small>
+      </div>
+      <div class="gallery-caption">
+        <span class="cat">Bedroom</span>
+        <span class="title">Bed Frame</span>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="ph">
+        <svg viewBox="0 0 48 48"><path d="M14 42h20M24 42V26M12 12c0 8 5 14 12 14s12-6 12-14"/><path d="M12 12h24l-2-6H14z"/></svg>
+        <small>Add Image</small>
+      </div>
+      <div class="gallery-caption">
+        <span class="cat">Seating</span>
+        <span class="title">Accent Chair</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="ring">LF</span>
+      <span class="name">Lakshmi Furnitures
+        <small>Handcrafted &middot; Since Tradition</small>
+      </span>
+    </div>
+
+    <div class="footer-meta">
+      <div>
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <div>
+          <div class="label">Location</div>
+          <div class="value">Your Store Address, City, State</div>
+        </div>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a11 11 0 005 5L15 12l5 2v3a2 2 0 01-2 2C10.6 19 5 13.4 5 6a2 2 0 011-3z"/></svg>
+        <div>
+          <div class="label">Call Us</div>
+          <div class="value">+91 00000 00000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    &copy; <span id="year"></span> Lakshmi Furnitures. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  // ---- top bar background on scroll ----
+  const topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', () => {
+    topbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ---- footer year ----
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---- hero slider (supports 1..n slides; auto-rotates if more than 1) ----
+  const slides = Array.from(document.querySelectorAll('#heroSlider .slide'));
+  const dotsWrap = document.getElementById('sliderDots');
+  let current = 0;
+  let timer = null;
+
+  function goTo(i){
+    slides[current].classList.remove('active');
+    dotsWrap.children[current] && dotsWrap.children[current].classList.remove('active');
+    current = (i + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dotsWrap.children[current] && dotsWrap.children[current].classList.add('active');
+  }
+
+  if (slides.length > 1) {
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => { goTo(i); resetTimer(); });
+      dotsWrap.appendChild(dot);
+    });
+    function resetTimer(){
+      clearInterval(timer);
+      timer = setInterval(() => goTo(current + 1), 6000);
+    }
+    resetTimer();
+  }
+</script>
+
+</body>
+</html>
