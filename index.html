@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lakshmi Furnitures — Handcrafted Furniture</title>
+<title>Lakshmi Furnitures</title>
 
 <!-- ===================================================================
      TITLE BAR / FAVICON LOGO
@@ -11,7 +11,7 @@
      browser-tab icon. Swap it for your real logo file later by changing
      this href to e.g. "logo.png" or "logo.svg".
 =================================================================== -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%232B1D14'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23B8925A' stroke-width='2'/%3E%3Ctext x='32' y='42' font-family='Georgia, serif' font-size='28' fill='%23EFE6D6' text-anchor='middle'%3ELF%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="images/logo.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,15 +92,12 @@
     align-items:center;
     gap:10px;
   }
-  .brandmark .ring{
-    width:38px; height:38px;
+  .logo-img{
+    width:44px; height:44px;
+    object-fit:contain;
     border-radius:50%;
-    border:1.5px solid var(--brass);
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Cormorant Garamond', serif;
-    color:var(--brass-light);
-    font-size:16px;
-    letter-spacing:1px;
+    background:rgba(244,238,224,0.06);
+    padding:4px;
   }
   .brandmark .name{
     color:var(--ivory);
@@ -362,14 +359,8 @@
     align-items:center;
     gap:14px;
   }
-  .footer-brand .ring{
-    width:52px; height:52px;
-    border-radius:50%;
-    border:1.5px solid var(--brass);
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Cormorant Garamond', serif;
-    color:var(--brass-light);
-    font-size:21px;
+  .logo-img--footer{
+    width:58px; height:58px;
   }
   .footer-brand .name{
     font-family:'Cormorant Garamond', serif;
@@ -455,7 +446,7 @@
 <!-- ================= TOP BAR ================= -->
 <header class="topbar" id="topbar">
   <a href="#top" class="brandmark">
-    <span class="ring">LF</span>
+    <img src="images/logo.png" alt="Lakshmi Furnitures logo" class="logo-img">
     <span class="name">Lakshmi Furnitures</span>
   </a>
   <nav>
@@ -475,7 +466,7 @@
 <section class="hero-slider" id="top">
   <div class="hero-slider-track" id="heroSlider">
     <div class="slide active">
-      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1920&q=80" alt="Handcrafted wooden furniture showcase">
+      <img src="images/hero%20slider.png" alt="Lakshmi Furnitures showcase">
       <div class="scrim"></div>
     </div>
     <!-- Add more <div class="slide">...</div> blocks here when you have more images -->
@@ -563,7 +554,7 @@
 <footer id="contact">
   <div class="footer-inner">
     <div class="footer-brand">
-      <span class="ring">LF</span>
+      <img src="images/logo.png" alt="Lakshmi Furnitures logo" class="logo-img logo-img--footer">
       <span class="name">Lakshmi Furnitures
         <small>Handcrafted &middot; Since Tradition</small>
       </span>
@@ -574,14 +565,14 @@
         <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
         <div>
           <div class="label">Location</div>
-          <div class="value">Your Store Address, City, State</div>
+          <div class="value">Munirka Furniture Market</div>
         </div>
       </div>
       <div>
         <svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a11 11 0 005 5L15 12l5 2v3a2 2 0 01-2 2C10.6 19 5 13.4 5 6a2 2 0 011-3z"/></svg>
         <div>
           <div class="label">Call Us</div>
-          <div class="value">+91 00000 00000</div>
+          <div class="value">+918826507854</div>
         </div>
       </div>
     </div>
