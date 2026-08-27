@@ -71,21 +71,13 @@
 
   /* ================= TOP BAR ================= */
   .topbar{
-    position:fixed;
-    top:0; left:0; right:0;
+    position:relative;
     z-index:50;
     display:flex;
     align-items:center;
     justify-content:space-between;
     padding:18px 6vw;
-    background:transparent;
-    transition:background .35s ease, padding .35s ease, box-shadow .35s ease;
-  }
-  .topbar.scrolled{
-    background:rgba(28,19,13,0.92);
-    padding:12px 6vw;
-    box-shadow:0 2px 18px rgba(0,0,0,0.25);
-    backdrop-filter:blur(6px);
+    background:var(--espresso-deep);
   }
   .brandmark{
     display:flex;
@@ -121,118 +113,38 @@
   .hero-slider{
     position:relative;
     width:100%;
-    height:92vh;
-    min-height:520px;
     overflow:hidden;
     background:var(--espresso-deep);
+    line-height:0;
   }
   .slide{
-    position:absolute;
-    inset:0;
-    opacity:0;
-    transition:opacity 1.1s ease;
+    position:relative;
+    width:100%;
+    display:none;
   }
-  .slide.active{ opacity:1; }
+  .slide.active{ display:block; }
   .slide img{
     width:100%;
-    height:100%;
-    object-fit:cover;
-    /* subtle slow zoom for a premium feel */
-    animation:kenburns 12s ease-in-out infinite alternate;
-  }
-  @keyframes kenburns{
-    from{ transform:scale(1); }
-    to{ transform:scale(1.08); }
-  }
-  .slide .scrim{
-    position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(28,19,13,0.55) 0%, rgba(28,19,13,0.35) 45%, rgba(28,19,13,0.8) 100%);
-  }
-
-  .hero-content{
-    position:relative;
-    z-index:5;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:0 20px;
-  }
-  .hero-content .eyebrow{
-    color:var(--brass-light);
-    font-size:13px;
-    letter-spacing:0.35em;
-    text-transform:uppercase;
-    margin-bottom:22px;
-  }
-  .hero-content h1{
-    color:var(--ivory);
-    font-size:clamp(48px, 9vw, 108px);
-    line-height:0.95;
-    text-transform:uppercase;
-    letter-spacing:0.02em;
-  }
-  .hero-content .tagline{
-    margin-top:22px;
-    color:var(--ivory-soft);
-    font-size:clamp(15px, 1.6vw, 19px);
-    font-weight:300;
-    letter-spacing:0.03em;
-    max-width:560px;
-  }
-  .hero-content .cta{
-    margin-top:40px;
-    display:inline-block;
-    padding:14px 40px;
-    border:1px solid var(--brass);
-    color:var(--brass-light);
-    font-size:12px;
-    letter-spacing:0.22em;
-    text-transform:uppercase;
-    transition:background .3s ease, color .3s ease;
-  }
-  .hero-content .cta:hover{
-    background:var(--brass);
-    color:var(--espresso-deep);
+    height:auto;
+    display:block;
   }
 
   .slider-dots{
-    position:absolute;
-    bottom:36px; left:50%;
-    transform:translateX(-50%);
-    z-index:6;
+    position:relative;
+    margin-top:18px;
     display:flex;
+    justify-content:center;
     gap:10px;
   }
   .slider-dots button{
     width:8px; height:8px;
     border-radius:50%;
-    border:1px solid var(--brass-light);
+    border:1px solid var(--brass);
     background:transparent;
     cursor:pointer;
     padding:0;
   }
-  .slider-dots button.active{ background:var(--brass-light); }
-
-  .scroll-cue{
-    position:absolute;
-    bottom:34px; right:6vw;
-    z-index:6;
-    color:var(--ivory-soft);
-    font-size:11px;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    writing-mode:vertical-rl;
-    display:flex; align-items:center; gap:10px;
-    opacity:0.7;
-  }
-  .scroll-cue::after{
-    content:"";
-    width:1px; height:34px;
-    background:var(--brass-light);
-  }
+  .slider-dots button.active{ background:var(--brass); }
 
   /* ================= INTRO ================= */
   .intro{
@@ -425,7 +337,6 @@
     .footer-inner{ flex-direction:column; align-items:flex-start; }
   }
   @media (max-width:520px){
-    .hero-content h1{ font-size:15vw; }
     .gallery-grid{ gap:16px; }
   }
 
@@ -467,7 +378,6 @@
   <div class="hero-slider-track" id="heroSlider">
     <div class="slide active">
       <img src="images/hero%20slider.png" alt="Lakshmi Furnitures showcase">
-      <div class="scrim"></div>
     </div>
     <!-- Add more <div class="slide">...</div> blocks here when you have more images -->
   </div>
@@ -584,12 +494,6 @@
 </footer>
 
 <script>
-  // ---- top bar background on scroll ----
-  const topbar = document.getElementById('topbar');
-  window.addEventListener('scroll', () => {
-    topbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
-
   // ---- footer year ----
   document.getElementById('year').textContent = new Date().getFullYear();
 
